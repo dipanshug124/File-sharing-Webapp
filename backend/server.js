@@ -6,13 +6,12 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'))
 
+const connectDB = require('./config/db');
+connectDB();
+
 //Template engine
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
-
-
-const connectDB = require('./config/db');
-connectDB();
 
 //Routes
 app.use('/api/files', require('./routes/files'));

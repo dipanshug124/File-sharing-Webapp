@@ -2,21 +2,15 @@ require('dotenv').config();
 const nodemailer = require('nodemailer')
 async function sentMail({ from, to, subject, text, html }) {
     let transporter = nodemailer.createTransport({
-        service: 'SendPulse', // no need to set host or port etc.
+        service: 'gmail',
         auth: {
-            user: 'account.email@example.com',
-            pass: 'smtp-password'
+            type: 'OAuth2',
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASSWORD,
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            refreshToken: process.env.REFRESH_TOKEN
         }
-
-        // service: 'gmail',
-        // auth: {
-        //     type: 'OAuth2',
-        //     user: process.env.MAIL_USER,
-        //     pass: process.env.MAIL_PASSWORD,
-        //     clientId: process.env.CLIENT_ID,
-        //     clientSecret: process.env.CLIENT_SECRET,
-        //     refreshToken: process.env.REFRESH_TOKEN
-        // }
     });
 
     let info = await transporter.sendMail({
